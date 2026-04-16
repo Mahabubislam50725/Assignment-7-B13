@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import UseFriend from '../Hooks/UseFriend';
 import { Bell, Archive, Trash2, Phone, MessageSquare, Video } from "lucide-react";
 import { Star } from "lucide-react";
 import { Heart } from "lucide-react";
 import { HashLoader } from 'react-spinners';
+import { FriendTimeLineContext } from '../Context/FriendTimeLineContext';
+import { toast } from 'react-toastify';
 
 
 const FriendsDetails = () => {
@@ -13,6 +15,23 @@ const FriendsDetails = () => {
 
     const expectedFriend = friends.find(friend => String(friend.id) === id);
 
+    // const [timeline, setTimeline] = useState([]);
+     const {timeline, setTimeline} = useContext(FriendTimeLineContext);
+
+    const handleTimeline = (type) => {
+        const newAction = {
+            type: type,
+            friend: expectedFriend.name,
+            time: new Date().toLocaleString()
+        };
+
+        toast.success(`${type} with ${expectedFriend.name} added to timeline`)
+
+        setTimeline(prev => [...prev, newAction]);
+    };
+
+
+    console.log(timeline);
     if (loading) {
         return (
             <div className="min-h-screen flex justify-center items-center">
@@ -34,7 +53,7 @@ const FriendsDetails = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl w-full">
 
-               
+
                 <div className="bg-white rounded-2xl shadow p-6 text-center">
 
                     <img
@@ -50,24 +69,24 @@ const FriendsDetails = () => {
                     <div className="flex justify-center gap-2 mt-2">
 
                         <span className={`text-xs px-3 py-1 rounded-full ${expectedFriend.status === "Overdue"
-                                ? "bg-red-100 text-red-600"
-                                : expectedFriend.status === "Almost due"
-                                    ? "bg-yellow-100 text-yellow-600"
-                                    : "bg-green-100 text-green-600"
+                            ? "bg-red-100 text-red-600"
+                            : expectedFriend.status === "Almost due"
+                                ? "bg-yellow-100 text-yellow-600"
+                                : "bg-green-100 text-green-600"
                             }`}>
                             {expectedFriend.status}
                         </span>
 
-                        
+
 
                     </div>
                     <div className="flex  justify-center items-center mt-3 gap-2 font-bold">
-                                    {expectedFriend.tags.map((tag, index) => (
-                                        <span key={index} className="badge badge-accent">
-                                            {tag}
-                                        </span>
-                                    ))}
-                     </div>
+                        {expectedFriend.tags.map((tag, index) => (
+                            <span key={index} className="badge badge-accent">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
 
                     <p className="text-sm text-gray-500 mt-3 italic">
                         "{expectedFriend.bio}"
@@ -159,15 +178,15 @@ const FriendsDetails = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-                            <button className="border rounded-xl py-6 hover:bg-gray-100">
+                            <button  onClick={() => handleTimeline("call")} className="border rounded-xl py-6 hover:bg-gray-100">
                                 📞 <br /> Call
                             </button>
 
-                            <button className="border rounded-xl py-6 hover:bg-gray-100">
+                            <button  onClick={() => handleTimeline("text")} className="border rounded-xl py-6 hover:bg-gray-100">
                                 💬 <br /> Text
                             </button>
 
-                            <button className="border rounded-xl py-6 hover:bg-gray-100">
+                            <button  onClick={() => handleTimeline("video")} className="border rounded-xl py-6 hover:bg-gray-100">
                                 🎥 <br /> Video
                             </button>
 
