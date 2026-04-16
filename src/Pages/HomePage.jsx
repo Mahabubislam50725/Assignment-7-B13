@@ -9,7 +9,7 @@ const HomePage = () => {
     return (
         <div>
            <Banner Friend={Friend}></Banner>
-        <Friends Friend={Friend}></Friends>
+        <Friends></Friends>
  
            
         </div>
