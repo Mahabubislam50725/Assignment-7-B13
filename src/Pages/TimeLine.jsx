@@ -5,7 +5,7 @@ const TimeLine = () => {
 
     const { timeline } = useContext(FriendTimeLineContext);
 
-    // ✅ filter state
+  
     const [filter, setFilter] = useState("all");
 
     const getIcon = (type) => {
@@ -15,7 +15,7 @@ const TimeLine = () => {
         return "🤝";
     };
 
-    // ✅ filtering logic
+   
     const filteredTimeline =
         filter === "all"
             ? timeline
@@ -26,7 +26,7 @@ const TimeLine = () => {
             <div className='space-y-4 p-6 my-7'>
                 <h1 className='font-bold text-5xl'>TimeLine</h1>
 
-                {/* ✅ onChange added */}
+            
                 <select
                     defaultValue="all"
                     onChange={(e) => setFilter(e.target.value)}
