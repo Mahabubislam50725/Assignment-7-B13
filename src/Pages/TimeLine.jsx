@@ -19,15 +19,17 @@ const TimeLine = () => {
                 <h1 className='font-bold text-5xl'>TimeLine</h1>
                 <select defaultValue="Filter timeline" className="select">
                     <option disabled={true}>Filter timeline</option>
-                    <option>Crimson</option>
-                    <option>Amber</option>
-                    <option>Velvet</option>
+                    <option>Call</option>
+                    <option>Text</option>
+                    <option>Video</option>
                 </select>
             </div>
 
             <div className="space-y-4 p-4 mb-7">
                 {
-                    timeline.map((item, index) => (
+                  timeline.length == 0 ? <h2 className='font-bold text-4xl text-center my-5'>
+                    No activity yet!
+                  </h2> : timeline.map((item, index) => (
                         <div
                             key={index}
                             className="flex items-center gap-4 bg-gray-100 p-4 rounded-xl shadow-sm"
